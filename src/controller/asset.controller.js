@@ -1,12 +1,19 @@
 const assetModel = require("../model/asset.model")
 
 const findAllAsset = async (req, res) => {
+   try {
     const assets = await assetModel.findAllAsset()
 
-    res.json({ data: assets })
+    res.status(200).json({ data: assets })
+    
+   } catch (error) {
+    
+        res.status(500).json({msg: "Algo salió mal", error: error})
+   }
 }
 
 const createAsset = async (req, res) => {
+    try {
     const values = { ...req.body }
 
     const result = await assetModel.createAsset(values)
@@ -15,52 +22,83 @@ const createAsset = async (req, res) => {
 
     const asset = await assetModel.findById(insertId)
 
+    res.status(200).json({ data: asset })
 
-    res.json({ data: asset })
+    } catch (error) {
+        
+        res.status(500).json({msg: "Algo salió mal", error: error})
+    }
 }
 
 const findAssetById = async (req, res) => {
     
-    const { id } = req.params
+    try {
+        
+        const { id } = req.params
 
-    const asset = await assetModel.findById(id)
+        const asset = await assetModel.findById(id)
 
-    res.json({ asset })
+        res.status(200).json({ asset })
+
+    } catch (error) {
+
+        res.status(500).json({msg: "Algo salió mal", error: error})
+    }
 
 }
 
 const findAssetsByEmployeeId = async (req, res) => {
     
-    const { id } = req.params
+    try {
+        const { id } = req.params
 
-    const assets = await assetModel.findAssetsByEmployeeId(id)
+        const assets = await assetModel.findAssetsByEmployeeId(id)
 
-    res.json({ assets })
+        res.status(200).json({ assets })
+
+    } catch (error) {
+
+        res.status(500).json({msg: "Algo salió mal", error: error})
+
+    }
 }
 
 const deleteAssetById = async (req, res) => {
     
-    const { id } = req.params
+    try {
+        const { id } = req.params
 
-    await assetModel.deleteById(id)
+        await assetModel.deleteById(id)
 
-    res.json({ mensaje: `asset ${id} eliminado`})
+        res.status(200).json({ mensaje: `asset ${id} eliminado`})
+    
+    } catch (error) {
+        
+        res.status(500).json({msg: "Algo salió mal", error: error})
+    
+    }
     
 }
 
 const updateAssetById = async (req, res) => {
     
-    const { id } = req.params
+    try {
+        
+        const { id } = req.params
 
-    const values = { ...req.body }
+        const values = { ...req.body }
   
-    await assetModel.updateById(id, values)
+        await assetModel.updateById(id, values)
 
-    const asset = await assetModel.findById(id)
+        const asset = await assetModel.findById(id)
 
-
-
-    res.json({ asset })
+        res.status(200).json({ asset })
+    
+    } catch (error) {
+        
+        res.status(500).json({msg: "Algo salió mal", error: error})
+    
+    }
 
 }
 
