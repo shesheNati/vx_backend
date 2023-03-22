@@ -10,46 +10,48 @@ const findAllAsset = async () => {
 
 const createAsset = async (values) => {
   const { employee_id, name, type, code, marca, description, purchase_date } =
-    values
+    values;
 
-    console.log(values)
-  
-  const result = await connection.query(
-    "INSERT INTO asset( employee_id, name, type, code, marca, description, purchase_date) values( ?, ?, ?, ?, ?, ?, ?)", [
- 
-      employee_id, 
-      name, type, 
-      code, 
-      marca, 
-      description, 
-      purchase_date
-    ])
-    .spread((result) => result)
+  console.log(values);
 
-    return result
-}
+  const result = await connection
+    .query(
+      "INSERT INTO asset( employee_id, name, type, code, marca, description, purchase_date) values( ?, ?, ?, ?, ?, ?, ?)",
+      [employee_id, name, type, code, marca, description, purchase_date]
+    )
+    .spread((result) => result);
+
+  return result;
+};
 
 const findById = async (id) => {
-    const rows = await connection.query("select * from asset where asset_id = ?", [id]).spread(rows => rows)
-    return rows.length > 0 ? rows[0] : []
-} 
+  const rows = await connection
+    .query("select * from asset where asset_id = ?", [id])
+    .spread((rows) => rows);
+  return rows.length > 0 ? rows[0] : [];
+};
 
 const findAssetsByEmployeeId = async (id) => {
-    const rows = await connection.query("select * from asset where employee_id = ?", [id]).spread(rows => rows)
-    return rows
-} 
+  const rows = await connection
+    .query("select * from asset where employee_id = ?", [id])
+    .spread((rows) => rows);
+  return rows;
+};
 
 const updateById = async (id, asset) => {
-  const rows = await connection.query("UPDATE  `asset` SET ? WHERE `asset_id` = ?", [asset, id]).spread(rows => rows)
-  return rows
+  const rows = await connection
+    .query("UPDATE  `asset` SET ? WHERE `asset_id` = ?", [asset, id])
+    .spread((rows) => rows);
+  return rows;
   // return rows.length > 0 ? rows[0] : []
-} 
+};
 
 const deleteById = async (id) => {
-  const rows = await connection.query("DELETE FROM `asset` WHERE `asset_id` = ?", [id]).spread(rows => rows)
-  return rows.length > 0 ? rows[0] : []
-}  
-
+  const rows = await connection
+    .query("DELETE FROM `asset` WHERE `asset_id` = ?", [id])
+    .spread((rows) => rows);
+  return rows.length > 0 ? rows[0] : [];
+};
 
 module.exports = {
   findAllAsset: findAllAsset,
@@ -57,5 +59,5 @@ module.exports = {
   findById: findById,
   deleteById: deleteById,
   updateById: updateById,
-  findAssetsByEmployeeId: findAssetsByEmployeeId  
+  findAssetsByEmployeeId: findAssetsByEmployeeId,
 };
