@@ -27,7 +27,14 @@ const findById = async (id) => {
   const rows = await connection
     .query("select * from employee where employee_id = ?", [id])
     .spread((rows) => rows);
-  return rows.length > 0 ? rows[0] : [];
+  return rows.length > 0 ? rows[0] : null;
+};
+
+const findByCuit = async (cuit) => {
+  const rows = await connection
+    .query("select * from employee where cuit = ?", [cuit])
+    .spread((rows) => rows);
+  return rows.length > 0 ? rows[0] : null;
 };
 
 const updateById = async (id, employee) => {
@@ -51,4 +58,5 @@ module.exports = {
   findById: findById,
   deleteById: deleteById,
   updateById: updateById,
+  findByCuit: findByCuit,
 };

@@ -28,7 +28,7 @@ const findById = async (id) => {
   const rows = await connection
     .query("select * from asset where asset_id = ?", [id])
     .spread((rows) => rows);
-  return rows.length > 0 ? rows[0] : [];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 const findAssetsByEmployeeId = async (id) => {
